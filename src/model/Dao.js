@@ -1,5 +1,8 @@
 import mongoose from "mongoose"
 import User from "./User.js"
+import Products from "./Products.js"
+import Carts from "./Carts.js"
+import Chats from "./Chats.js"
 
 export default class Dao{
     constructor(config){
@@ -9,9 +12,15 @@ export default class Dao{
         })
         const timestamp = {timestamps:{createdAt:'created_at', updatedAt:'updated_at'}}
         const userSchema = mongoose.Schema(User.schema,timestamp)
+        const productSchema = mongoose.Schema(Products.schema,timestamp)
+        const cartSchema = mongoose.Schema(Carts.schema,timestamp)
+        const chatSchema = mongoose.Schema(null, timestamp)
         
         this.models={
-            [User.model]:mongoose.model(User.model, userSchema)
+            [User.model]:mongoose.model(User.model, userSchema),
+            [Products.model]:mongoose.model(Products.model, productSchema),
+            [Carts.model]:mongoose.model(Carts.model, cartSchema),
+            [Chats.model]:mongoose.model(Chats.model, chatSchema)
         }
     }
     
@@ -39,7 +48,7 @@ export default class Dao{
         }
     }
 
-    update = async(options, entity)=>{
+    update = async(document, entity)=>{
         if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
         let id =  document._id
         delete document._id
@@ -57,4 +66,19 @@ export default class Dao{
         if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
         return this.models[entity].exists(options)
     }
+
+    //CART
+    addProduct = async(cartId, productId, entity)=>{
+        if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
+        let result = await this.models[entity].updateOne({_id:cartId},{$push:{products:productId}})
+        return {status:"success", payload:result}
+    }
+
+    getProductsByCartId = async (cartId,entity)=>{
+        if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
+        let cart = await this.models[entity].findById(cartId) 
+        let products = cart.products
+        return {status:"success", payload:products}
+    }
+
 }
