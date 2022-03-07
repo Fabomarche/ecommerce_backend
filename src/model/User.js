@@ -1,3 +1,7 @@
+import mongoose from 'mongoose'
+const { Schema } = mongoose
+
+
 export default class User{
     constructor(data){
         this.data = data
@@ -16,7 +20,11 @@ export default class User{
             age: { type: Number, required: false },
             phone: { type: Number },
             role:{type:String},
-            avatar: { type: String, required: false }
+            avatar: { type: String, required: false },
+            cart:{
+                type:Schema.Types.ObjectId,
+                ref:'Carts',
+            }
         }
     }
 }

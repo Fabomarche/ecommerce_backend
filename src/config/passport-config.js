@@ -11,7 +11,7 @@ const ExtractJwt = jwt.ExtractJwt
 
 const initializePassport = ()=>{
     passport.use('register', new LocalStrategy({passReqToCallback:true,usernameField:"email",session:false},async(req,username,password,done)=>{
-        let {firstName,lastName,email,phone,addres,age} = req.body
+        let {firstName,lastName,email,phone,addres,age,cart} = req.body
         try{
             if(!req.file) return done(null, false,{messages:"Couldn't upload avatar"})
             console.log(req.file)
@@ -25,9 +25,9 @@ const initializePassport = ()=>{
                 username,
                 addres,
                 age,
+                cart,
                 role:"user",
                 password:createHash(password),
-                cart:[],
                 avatar:req.file.filename
             }
             let result = await userService.save(newUser)

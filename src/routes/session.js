@@ -12,7 +12,7 @@ router.get('/current',passportCall('jwt'), checkAuthorization(["ADMIN", "USER"])
 })
 
 router.post('/register', uploader.single('avatar'), passportCall('register'),(req,res)=>{
-    res.send({message:"Signed up"})
+    res.send({status:"success",message:"Signed up"})
 })
 
 router.post('/login', passportCall('login'), (req,res)=>{

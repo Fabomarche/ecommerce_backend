@@ -1,13 +1,12 @@
 import express from 'express'
 const router = express.Router()
-import { cartsService } from '../services/services.js'
+import { cartsService, userService } from '../services/services.js'
 
 
 //POSTS
 router.post('/', (req, res) => {
     cartsService.save({products:[]})
     .then(result => res.send(result))
-    console.log()
 })
 
 router.post('/:cid/products', (req, res) => {

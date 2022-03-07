@@ -3,7 +3,7 @@ const router = express.Router()
 import { productsService } from '../services/services.js'
 import upload from '../services/upload.js'
 import { io } from '../app.js'
-import { authMiddleware } from '../utils/utils.js'
+import { authMiddleware } from '../utils.js'
 
 //GETS
 router.get('/', async (req, res) => {
