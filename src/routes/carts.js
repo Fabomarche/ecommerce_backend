@@ -16,6 +16,7 @@ router.post('/:cid/products', (req, res) => {
     .then(result => res.send(result))
 })
 
+
 //DELETES
 router.delete('/:cid', (req, res) => {
     let id = req.params.cid
@@ -37,6 +38,7 @@ router.get('/:cid/products', (req, res) => {
     cartsService.getProductsByCartId(id)
     .then(result => res.send(result))
 })
+
 
 //NO SE IMPLEMENTA EN ESTA VERSION
 // router.get('/', (req,res)=>{

@@ -22,8 +22,7 @@ export default class User{
             role:{type:String},
             avatar: { type: String, required: false },
             cart:{
-                type:Schema.Types.ObjectId,
-                ref:'Carts',
+                type:Array
             }
         }
     }

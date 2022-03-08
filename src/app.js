@@ -38,6 +38,7 @@ app.use((req,res,next)=>{
 })
 
 app.use('/images', express.static(__dirname+'/public'))
+app.use('/avatar/', express.static(__dirname + '/public'))
 app.use(express.static(__dirname+'/public'))
 
 //ROUTES
