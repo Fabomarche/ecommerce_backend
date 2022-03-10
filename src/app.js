@@ -11,10 +11,13 @@ import cookieParser from 'cookie-parser'
 import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
 import { productsService } from './services/services.js'
+import { createLogger }from './logger.js'
 
 const app = express()
 const PORT = process.env.PORT||8080
 const server = app.listen(PORT,()=>console.log(`Listening on ${PORT}`))
+
+const logger = createLogger()
 
 export const io = new Server(server)
 
