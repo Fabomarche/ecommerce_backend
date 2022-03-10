@@ -94,7 +94,13 @@ router.get('/:uid/confirm',async(req,res)=>{
                 body:`nuevo pedido de ${user.firstName} ${user.email}, productos: ${JSON.stringify(user.cart)}`,
             })
             console.log(wspResult)
-            
+
+            const sms = await client.messages.create({
+                body:`Hola ${user.firstName}, su pedido ha sido registrado y se encuentra en proceso. Productos:${JSON.stringify(user.cart)}`,
+                from:'+19034947802',
+                to:`+${user.phone}`
+            })
+            console.log(sms)
             res.send(`Felicitaciones ${user.firstName} su compra fue realizada`)
         }catch(err){
             console.log(err)
