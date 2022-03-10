@@ -43,3 +43,13 @@ fetch('/session/current').then(response => response.json())
         })
     })
 })
+
+const confirm = () => {
+    fetch('/session/current')
+    .then(response => response.json())
+    .then(data => 
+                {
+                console.log(data)
+                location.href=`/cart/${data._id}/confirm`
+            })
+}
