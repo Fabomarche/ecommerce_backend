@@ -9,7 +9,7 @@ const getAllProducts = async(req,res)=>{
 
 const getProductsById = async(req,res)=>{
     let id = req.params.pid
-    let product = await productsService.getBy({id:id})
+    let product = await productsService.getBy({_id:id})
     res.send({status:"success", payload: product})
 }
 
