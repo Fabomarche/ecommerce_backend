@@ -11,18 +11,23 @@ export default class User{
     }
     static get schema(){
         return {
-            firstName: { type: String, required: true },
-            lastName: { type: String, required: true },
-            username: { type: String, required: true, unique: true, default: 'anon' },
+            first_name: { type: String, required: true },
+            last_name: { type: String, required: true },
+            //username: { type: String, required: true, unique: true, default: 'anon' },//es necesario?
             email: { type: String, required: true, unique: true },
             password: { type: String, required: true },
             address:{ type: String },
             age: { type: Number, required: false },
             phone: { type: Number },
             role:{type:String},
-            avatar: { type: String, required: false },
+            profile_picture: { type: String, required: false },
             cart:{
-                type:Array
+                type:Schema.Types.ObjectId,
+                ref:'Carts'
+            },
+            status:{
+                type:Boolean,
+                default:true
             }
         }
     }

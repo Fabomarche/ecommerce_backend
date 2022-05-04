@@ -26,24 +26,23 @@ const transport = createTransport({
 
 const initializePassport = ()=>{
     passport.use('register', new LocalStrategy({passReqToCallback:true,usernameField:"email",session:false},async(req,username,password,done)=>{
-        let {firstName,lastName,email,phone,addres,age,cart} = req.body
+        let {first_name,last_name,email,phone} = req.body
         try{
-            if(!req.file) return done(null, false,{messages:"Couldn't upload avatar"})
-            console.log(req.file)
+            if(!req.file) return done(null, false,{messages:"Couldn't get picture for user"})
             let user = await userService.getBy({email:email})
             if(user) return done(null,false,{messages:"User Already exists"})
             const newUser = {
-                firstName,
-                lastName,
+                first_name,
+                last_name,
                 email,
                 phone,
-                username,
-                addres,
-                age,
-                cart:[{id:'61d2746cf0befb9c4c6fc0e6'},{id:'61d274abf0befb9c4c6fc0ec'},{id:'61d274cff0befb9c4c6fc0ef'}],
+                // username,
+                // addres,
+                // age,
+                //cart:[{id:'61d2746cf0befb9c4c6fc0e6'},{id:'61d274abf0befb9c4c6fc0ec'},{id:'61d274cff0befb9c4c6fc0ef'}],
                 role:"user",
                 password:createHash(password),
-                avatar:req.file.filename
+                profile_picture:req.file.location
             }
             const mail = {
                 from:"Online E-commerce <Online E-commerce>",
@@ -54,8 +53,9 @@ const initializePassport = ()=>{
                     <p>${JSON.stringify(newUser)}</p>
                 `
             }
-            let emailResult = await transport.sendMail(mail)
-            console.log(emailResult)
+            //let emailResult = await transport.sendMail(mail)
+            //console.log(emailResult)
+
             let result = await userService.save(newUser)
             return done(null,result)
         }catch(err){
@@ -64,15 +64,12 @@ const initializePassport = ()=>{
         }
     }))
 
-    passport.use('login',new LocalStrategy({usernameField:"email"},async(username,password,done)=>{
+    passport.use('login',new LocalStrategy({usernameField:'email'},async(username,password,done)=>{
         try{
-            console.log(username)
-            console.log(password)
-            if(username === config.session.ADMIN && config.session.PASSWORD){
-                return done (null,{id:0,role:"admin"})
+            if(username===config.session.SUPERADMIN&&config.session.SUPERADMIN_PASSWORD){
+                return done (null,{id:0,role:"superadmin"})
             }
             const user = await userService.getBy({email:username})
-            console.log(user)
             if(!user) return done(null,false,{messages:"No user found"})
             if(!isValidPassword(user,password)) return done(null,false,{messages:"Incorrect password"})
             return done(null, user)
@@ -83,9 +80,8 @@ const initializePassport = ()=>{
 
     passport.use('jwt',new JWTStrategy({jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]), secretOrKey:config.jwt.SECRET}, async(jwt_payload,done)=>{
         try{
-            if(jwt_payload.role === "admin") return done(null, jwt_payload)
-            console.log(jwt_payload)
-            let user = await userService.getBy({_id:jwt_payload._id})
+            if(jwt_payload.role === "superadmin") return done(null, jwt_payload)
+            let user = await userService.getBy({_id:jwt_payload.id})
             if(!user) return done(null,false,{messages:"User not found"})
             return done(null,user)
         }catch(err){

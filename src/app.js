@@ -1,13 +1,13 @@
 import express from 'express'
-import upload from './services/upload.js'
-import cors from 'cors'
-import __dirname from './utils.js'
 import passport from 'passport'
-import initializePassport from './config/passport-config.js'
-import sessionRouter from './routes/session.js'
-import productsRouter from './routes/products.js'
-import cartRouter from './routes/carts.js'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import initializePassport from './config/passport-config.js'
+import upload from './services/upload.js'
+import __dirname from './utils.js'
+import sessionRouter from './routes/session.routes.js'
+import productsRouter from './routes/products.routes.js'
+import cartRouter from './routes/carts.routes.js'
 import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
 import { productsService } from './services/services.js'
@@ -25,9 +25,9 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', __dirname+'/views')
 
+app.use(cors({credentials: true, origin:"http://localhost:3000"}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cors())
 app.use(cookieParser())
 initializePassport()
 app.use(passport.initialize())
@@ -45,9 +45,9 @@ app.use('/avatar/', express.static(__dirname + '/public'))
 app.use(express.static(__dirname+'/public'))
 
 //ROUTES
-app.use('/session',sessionRouter)
-app.use('/products',productsRouter)
-app.use('/cart',cartRouter)
+app.use('/api/session',sessionRouter)
+app.use('/api/products',productsRouter)
+app.use('/api/cart',cartRouter)
 
 app.use(upload.single('image'))
 
@@ -65,6 +65,10 @@ app.use(upload.single('image'))
 // })
 
 //-------------------- socket ----------------//
+
+//**********++++++VIDEO FRONT MINUTO 8 LO ANTES LO MUESTRA++++*****************
+//************* EN EL VIDEO 2 MINUTO 7 APROSX VUELVE A EXPLICAR
+
 io.on('connection', async socket => {
     console.log(`the socket ${socket.id} is connected`)
     let allProducts = await productsService.getAll()
