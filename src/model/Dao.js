@@ -2,7 +2,8 @@ import mongoose from "mongoose"
 import User from "./User.js"
 import Products from "./Products.js"
 import Carts from "./Carts.js"
-import Chats from "./Chats.js"
+//import Chats from "./Chats.js"
+import Message from "./Message.js"
 
 export default class Dao{
     constructor(config){
@@ -14,13 +15,15 @@ export default class Dao{
         const userSchema = mongoose.Schema(User.schema,timestamp)
         const productSchema = mongoose.Schema(Products.schema,timestamp)
         const cartSchema = mongoose.Schema(Carts.schema,timestamp)
-        const chatSchema = mongoose.Schema(null, timestamp)
+        //const chatSchema = mongoose.Schema(null, timestamp)
+        const messageSchema = mongoose.Schema(Message.schema,timestamp)
         
         this.models={
             [User.model]:mongoose.model(User.model, userSchema),
             [Products.model]:mongoose.model(Products.model, productSchema),
             [Carts.model]:mongoose.model(Carts.model, cartSchema),
-            [Chats.model]:mongoose.model(Chats.model, chatSchema)
+           // [Chats.model]:mongoose.model(Chats.model, chatSchema),
+            [Message.model]:mongoose.model(Message.model,messageSchema)
         }
     }
     

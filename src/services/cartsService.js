@@ -1,4 +1,5 @@
 import Carts from "../model/Carts.js"
+import { userService } from "./services.js" 
 import GenericQueries from "./genericQueries.js"
 
 
@@ -7,18 +8,9 @@ export default class CartService extends GenericQueries{
         super(dao,Carts.model)
     }
 
-    getByWithPopulate = async(params) =>{
-        let result = await this.dao.models[Carts.model].findOne(params).populate('products.product')
-        return result;
-    }
-
-    //estos metodos estaban en generic querys
-    addProductToCart = async (cartId, productId)=>{
-        return this.dao.addProduct(cartId, productId, this.model)
-    }
-
-    getProductsByCartId = async (id)=>{
-        return this.dao.getProductsByCartId(id, this.model)
+    getByWithPopulate = async(cartId) =>{
+        let cart = await this.dao.models[Carts.model].findOne(cartId).populate('products.product')
+        return cart;
     }
 }
 
