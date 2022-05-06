@@ -13,14 +13,13 @@ export default class User{
         return {
             first_name: { type: String, required: true },
             last_name: { type: String, required: true },
-            //username: { type: String, required: true, unique: true, default: 'anon' },//es necesario?
+            //username: { type: String, required: false, unique: true, default: 'anon' },//es necesario?
             email: { type: String, required: true, unique: true },
             password: { type: String, required: true },
-            address:{ type: String },
-            age: { type: Number, required: false },
-            phone: { type: Number },
+            address:{ type: String, required: false },
+            age:{ type: Number, required: false },
+            phone:{ type: String },
             role:{type:String},
-            profile_picture: { type: String, required: false },
             cart:{
                 type:Schema.Types.ObjectId,
                 ref:'Carts'
@@ -28,7 +27,8 @@ export default class User{
             status:{
                 type:Boolean,
                 default:true
-            }
+            },
+            profile_picture:String
         }
     }
 }

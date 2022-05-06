@@ -10,10 +10,19 @@ export default class Carts{
     }
     static get schema(){
         return{
-            products:[{
-                type:Schema.Types.ObjectId,
-                ref:'Products',
-            }]
+            products:[
+                {
+                    product:{
+                        type:Schema.Types.ObjectId,
+                        ref:'Products',
+                    },
+                    quantity:{
+                        type:Number,
+                        default:1
+                    }
+                
+            }
+        ]
         }
     }
 }

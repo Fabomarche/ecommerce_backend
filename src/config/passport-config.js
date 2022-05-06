@@ -1,3 +1,4 @@
+import __dirname from "../utils.js";
 import passport from "passport";
 import local from 'passport-local'
 import { userService } from "../services/services.js"
@@ -29,6 +30,7 @@ const initializePassport = ()=>{
         let {first_name,last_name,email,phone} = req.body
         try{
             if(!req.file) return done(null, false,{messages:"Couldn't get picture for user"})
+            console.log(req.file)
             let user = await userService.getBy({email:email})
             if(user) return done(null,false,{messages:"User Already exists"})
             const newUser = {
@@ -39,10 +41,10 @@ const initializePassport = ()=>{
                 // username,
                 // addres,
                 // age,
-                //cart:[{id:'61d2746cf0befb9c4c6fc0e6'},{id:'61d274abf0befb9c4c6fc0ec'},{id:'61d274cff0befb9c4c6fc0ef'}],
                 role:"user",
                 password:createHash(password),
-                profile_picture:req.file.location
+                //cart: cart._id,
+                profile_picture:req.protocol+"://"+req.hostname+":8080"+'/avatars/'+req.file.filename
             }
             const mail = {
                 from:"Online E-commerce <Online E-commerce>",

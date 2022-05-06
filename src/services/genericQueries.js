@@ -24,12 +24,4 @@ export default class GenericQueries{
     delete = async(id)=> {
         return this.dao.delete(id,this.model)
     }
-
-    addProductToCart = async (cartId, productId)=>{
-        return this.dao.addProduct(cartId, productId, this.model)
-    }
-
-    getProductsByCartId = async (id)=>{
-        return this.dao.getProductsByCartId(id, this.model)
-    }
 } 

@@ -10,6 +10,7 @@ const getAllProducts = async(req,res)=>{
 const getProductsById = async(req,res)=>{
     let id = req.params.pid
     let product = await productsService.getBy({_id:id})
+    if(!product) res.status(404).send({status:"error", error:"Not found"})
     res.send({status:"success", payload: product})
 }
 
