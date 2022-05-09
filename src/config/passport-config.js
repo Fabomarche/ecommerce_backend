@@ -1,7 +1,7 @@
 import __dirname from "../utils.js";
 import passport from "passport";
 import local from 'passport-local'
-import { userService } from "../services/services.js"
+import { userService, cartsService } from "../services/services.js"
 import { createHash, isValidPassword, cookieExtractor } from "../utils/utils.js";
 import config from "./config.js";
 import jwt from "passport-jwt";
@@ -33,6 +33,7 @@ const initializePassport = ()=>{
             console.log(req.file)
             let user = await userService.getBy({email:email})
             if(user) return done(null,false,{messages:"User Already exists"})
+            let cart = await cartsService.save({products:[]})
             const newUser = {
                 first_name,
                 last_name,
@@ -43,7 +44,7 @@ const initializePassport = ()=>{
                 // age,
                 role:"user",
                 password:createHash(password),
-                //cart: cart._id,
+                cart: cart._id,
                 profile_picture:req.protocol+"://"+req.hostname+":8080"+'/avatars/'+req.file.filename
             }
             const mail = {

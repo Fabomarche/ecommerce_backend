@@ -29,14 +29,14 @@ router.post('/login', passportCall('login'), (req,res)=>{
     }
     console.log(user)
     let token = jwt.sign(user, config.jwt.SECRET)
+    res.cookie('sessionCookie', 'boom', {
+        maxAge:1000*60*60
+    })
     res.cookie(config.jwt.COOKIE_NAME, token,{
         httpOnly:true,
         maxAge:1000*60*60
     })
-    res.cookie('sessionCookie', 'boom', {
-        maxAge:1000*60*60
-    })
-    res.send({status:"success", message:"Logged in", payload:{user, expiresAt: 60*60*1000}})
+    res.send({status:"success",payload:{user}})
 })
 
 router.get('/logout',(req,res)=>{

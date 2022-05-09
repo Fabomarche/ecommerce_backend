@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import { cartsService, userService } from '../services/services.js'
+import cartsController from '../controllers/carts.controller.js'
 import dotenv from 'dotenv'
 import { createTransport } from 'nodemailer'
 import twilio from "twilio"
@@ -18,60 +19,14 @@ const transport = createTransport({
     }
 })
 
-//POSTS
-router.post('/', (req, res) => {
-    cartsService.save({products:[]})
-    .then(result => res.send(result))
-})
 
-router.post('/:cid/products', (req, res) => {
-    let cartId = req.params.cid
-    let productId = req.body.id
-    cartsService.addProductToCart(cartId, productId)
-    .then(result => res.send(result))
-})
+router.delete('/:cid/products/:pid', cartsController.deleteProductFromCart)
+router.get('/:cid',cartsController.getCartById)
+router.put('/:cid',cartsController.updateCart)
+router.post('/purchase/:cid', cartsController.confirmPurchase)
+router.post('/:cid/products/:pid', cartsController.addProduct)
 
-
-//DELETES
-router.delete('/:cid', (req, res) => {
-    let id = req.params.cid
-    cartsService.delete(id)
-    .then(result => res.send(result))
-})
-
-router.delete('/:cid/products/:pid', (req, res) => {
-    let cartId = req.params.cid
-    let productId = req.params.pid
-    cartsService.delete(cartId, productId)
-    .then(result => res.send(result))
-})
-
-
-//GETS
-router.get('/:cid/products', (req, res) => {
-    let id = req.params.cid
-    cartsService.getProductsByCartId(id)
-    .then(result => res.send(result))
-})
-
-
-router.get('/',async(req,res)=>{
-    let result = await cartsService.getAll();
-    res.send(result)
-})
-
-router.get('/:cid',async(req, res)=>{
-    try {
-        let cid = req.params.cid;
-        let result = await cartsService.getBy({_id:cid})
-        res.send(result) 
-        
-    } catch (error) {
-        console.log(error)
-    }
-})
-
-
+//COMPARAR CON CARTS CONTROLLER CONFIRM PURCHASE
 router.get('/:uid/confirm',async(req,res)=>{
         try{
             let userId = req.params.uid

@@ -15,6 +15,7 @@ const getProductsById = async(req,res)=>{
 }
 
 const addNewProduct = async(req,res) =>{
+    //compara con apoyoback saveProduct
     let file = req.file
     let product = req.body
     product.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename
