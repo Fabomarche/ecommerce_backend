@@ -26,11 +26,11 @@ export default class GenericQueries{
     }
     
     //Cart
-    addProductToCart = async (cartId, productId)=>{
+    //addProductToCart = async (cartId, productId)=>{
         
-        return this.dao.addProduct(cartId, productId, this.model)
-    }
-    getProductsByCartId = async (id)=>{
-        return this.dao.getProductsByCartId(id, this.model)
-    }
+   //     return this.dao.addProduct(cartId, productId, this.model)
+   // }
+   // getProductsByCartId = async (id)=>{
+   //     return this.dao.getProductsByCartId(id, this.model)
+    //}
 } 

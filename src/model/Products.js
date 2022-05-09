@@ -31,6 +31,10 @@ export default class Products{
             thumbnail: {
                 type:String,
                 required:true
+            },
+            status:{
+                type:String,
+                default:"available"
             }
         }
     }
