@@ -1,7 +1,9 @@
 import express from 'express'
 const router = express.Router()
 import { cartsService, userService } from '../services/services.js'
+import cartController from '../controllers/carts.controller.js'
 import dotenv from 'dotenv'
+
 import { createTransport } from 'nodemailer'
 import twilio from "twilio"
 
@@ -60,16 +62,19 @@ router.get('/',async(req,res)=>{
     res.send(result)
 })
 
-router.get('/:cid',async(req, res)=>{
-    try {
-        let cid = req.params.cid;
-        let result = await cartsService.getBy({_id:cid})
-        res.send(result) 
+router.get('/:cid', cartController.getCartById)
+// router.get('/:cid',async(req, res)=>{
+//     try {
+//         let cid = req.params.cid;
+//         let result = await cartsService.getBy({_id:cid})
+//         res.send(result) 
         
-    } catch (error) {
-        console.log(error)
-    }
-})
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })
+
+
 
 
 router.get('/:uid/confirm',async(req,res)=>{

@@ -55,6 +55,7 @@ const initializePassport = ()=>{
                     <p>${JSON.stringify(newUser)}</p>
                 `
             }
+            //ACTIVAR A LO ULTIMO
             //let emailResult = await transport.sendMail(mail)
             //console.log(emailResult)
 
