@@ -1,16 +1,15 @@
-import Carts from "../model/Carts.js"
-import { userService } from "./services.js" 
+import Cart from "../model/Carts.js"
 import GenericQueries from "./genericQueries.js"
 
 
 export default class CartService extends GenericQueries{
     constructor(dao){
-        super(dao,Carts.model)
+        super(dao,Cart.model)
     }
 
-    getByWithPopulate = async(cartId) =>{
-        let cart = await this.dao.models[Carts.model].findOne(cartId).populate('products.product')
-        return cart;
+    getByWithPopulate = async(params) =>{
+        let result = await this.dao.models[Cart.model].findOne(params).populate('products.product')
+        return result;
     }
 }
 

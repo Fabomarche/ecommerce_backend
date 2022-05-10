@@ -1,28 +1,30 @@
-import mongoose from 'mongoose'
-const { Schema } = mongoose
+import mongoose from 'mongoose';
 
-export default class Carts{
+let Schema = mongoose.Schema;
+
+export default class Cart {
     constructor(data){
-        this.data=data
+        this.data = data;
     }
+
     static get model(){
-        return 'Carts'
+        return "Carts";
     }
+
     static get schema(){
         return{
             products:[
                 {
                     product:{
                         type:Schema.Types.ObjectId,
-                        ref:'Products',
+                        ref:"Products"
                     },
                     quantity:{
                         type:Number,
                         default:1
                     }
-                
-            }
-        ]
+                }
+            ]
         }
     }
 }

@@ -8,13 +8,13 @@ import config from '../config/config.js'
 //----***********++++ VIDEO 21' O ANTES HABA DE ESTO Y EN EL APOYO ESTA EL CÓDIGO
 const router =  express.Router()
 
-router.get('/current',passportCall('jwt'), (req,res)=>{// checkAuthorization(["ADMIN", "USER"]), el check es solo de prueba ver donde va...
-    let user = serialize(req.user,["first_name","last_name","role","profile_picture"])
+router.get('/current',passportCall('jwt'), (req,res)=>{
+    let user = serialize(req.user,["first_name","last_name","role","profile_picture","cart"])
     console.log(user);
     res.send({status:"success",payload:user});
 })
 
-router.post('/register', uploader.single('profilePic'), passportCall('register'),(req,res)=>{//avatar o profilePic ???
+router.post('/register', uploader.single('profilePic'), passportCall('register'),(req,res)=>{
     let user = req.user
     console.log(user)
     res.send({status:"success",message:"Signed up"})

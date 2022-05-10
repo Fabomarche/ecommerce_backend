@@ -7,7 +7,7 @@ import upload from './services/upload.js'
 import __dirname from './utils.js'
 import sessionRouter from './routes/session.routes.js'
 import productsRouter from './routes/products.routes.js'
-import cartRouter from './routes/carts.routes.js'
+import cartsRouter from './routes/carts.routes.js'
 import { Server } from 'socket.io'
 //import { productsService } from './services/services.js'
 import { messageService } from './services/services.js'
@@ -49,7 +49,7 @@ app.use(express.static(__dirname+'/public'))
 //ROUTES
 app.use('/api/session',sessionRouter)
 app.use('/api/products',productsRouter)
-app.use('/api/cart',cartRouter)
+app.use('/api/carts',cartsRouter)
 
 app.use(upload.single('image'))
 
