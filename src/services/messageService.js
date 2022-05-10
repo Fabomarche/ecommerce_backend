@@ -4,7 +4,7 @@ export default class MessageService extends GenericQueries{
     constructor(dao){
         super(dao,Message.model)
     }
-    getAllAndPopulate = async(params) =>{
+      getAllAndPopulate = async(params) =>{
         let result = await this.dao.models[Message.model].find(params).populate('author');
         return result;
     }

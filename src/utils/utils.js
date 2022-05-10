@@ -8,7 +8,7 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 export const isValidPassword = (user,password) => bcrypt.compareSync(password,user.password)
 export const serialize = (object,keys) =>{
     let serializedObject = Object.fromEntries(Object.entries(object).filter(pair=>keys.includes(pair[0])))
-    serializedObject._id = object._id;//_id o id en serialized??
+    serializedObject.id = object._id;//_id o id en serialized??
     return serializedObject;
 }
 export const cookieExtractor = req =>{
