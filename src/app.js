@@ -21,13 +21,13 @@ const logger = createLogger()
 
 const io = new Server(server,{
     cors: {
-        origin: "https://backend-ecommerce-coderhouse.herokuapp.com",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST"]
     }
 })
 
 
-app.use(cors({credentials: true, origin:"https://backend-ecommerce-coderhouse.herokuapp.com"}))
+app.use(cors({credentials: true, origin:"http://localhost:3000"}))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
