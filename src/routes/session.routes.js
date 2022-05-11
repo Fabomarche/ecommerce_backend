@@ -5,7 +5,6 @@ import { uploader } from '../utils/uploader.js'
 import jwt from "jsonwebtoken"
 import config from '../config/config.js'
 
-//----***********++++ VIDEO 21' O ANTES HABA DE ESTO Y EN EL APOYO ESTA EL CÓDIGO
 const router =  express.Router()
 
 router.get('/current',passportCall('jwt'), (req,res)=>{

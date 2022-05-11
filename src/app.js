@@ -9,7 +9,6 @@ import sessionRouter from './routes/session.routes.js'
 import productsRouter from './routes/products.routes.js'
 import cartsRouter from './routes/carts.routes.js'
 import { Server } from 'socket.io'
-//import { productsService } from './services/services.js'
 import { messageService } from './services/services.js'
 import { createLogger } from './logger.js'
 
@@ -34,14 +33,6 @@ app.use(cookieParser())
 initializePassport()
 app.use(passport.initialize())
 
-//middelware admin
-// const admin = true
-// app.use((req,res,next)=>{
-//     console.log(new Date().toTimeString().split(" ")[0], req.method, req.url)
-//     req.auth = admin
-//     next()
-// })
-
 app.use('/images', express.static(__dirname+'/public'))
 app.use('/avatars', express.static(__dirname + '/public'))
 app.use(express.static(__dirname+'/public'))
@@ -57,10 +48,6 @@ app.use(upload.single('image'))
 
 
 //-------------------- socket ----------------//
-
-//**********++++++VIDEO FRONT MINUTO 8 LO ANTES LO MUESTRA++++*****************
-//************* EN EL VIDEO 2 MINUTO 7 APROSX VUELVE A EXPLICAR
-
 let connectedSockets = {};
 io.on('connection', async socket=>{
     console.log("client connected");

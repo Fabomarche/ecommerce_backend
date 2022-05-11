@@ -1,6 +1,5 @@
 import { productsService } from "../services/services.js";
 
-//**************** VIDEO 2 MIN 2 APROX MUESTRA CONTROLLERS ***************
 
 const getAllProducts = async(req,res)=>{
     let products = await productsService.getAll()
@@ -15,7 +14,6 @@ const getProductsById = async(req,res)=>{
 }
 
 const addNewProduct = async(req,res) =>{
-    //compara con apoyoback saveProduct
     let file = req.file
     let product = req.body
     product.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename
@@ -36,7 +34,7 @@ const updateProduct = async(req,res)=>{
 const deleteProduct = async(req,res)=>{
     let id = req.params.pid
     productsService.delete(id).then(result => {
-        res.send({status:"success", payload: result})//nombre payload?
+        res.send({status:"success", payload: result})
     })
 }
 

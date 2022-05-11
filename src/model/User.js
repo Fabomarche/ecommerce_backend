@@ -13,7 +13,6 @@ export default class User{
         return {
             first_name: { type: String, required: true },
             last_name: { type: String, required: true },
-            //username: { type: String, required: false, unique: true, default: 'anon' },//es necesario?
             email: { type: String, required: true, unique: true },
             password: { type: String, required: true },
             address:{ type: String, required: false },

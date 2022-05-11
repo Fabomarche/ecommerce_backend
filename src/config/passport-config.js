@@ -82,7 +82,7 @@ const initializePassport = ()=>{
     passport.use('jwt',new JWTStrategy({jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]), secretOrKey:config.jwt.SECRET}, async(jwt_payload,done)=>{
         try{
             if(jwt_payload.role === "superadmin") return done(null, jwt_payload)
-            let user = await userService.getBy({_id:jwt_payload.id})//este linkea con serialize en utils/utils
+            let user = await userService.getBy({_id:jwt_payload.id})
             if(!user) return done(null,false,{messages:"User not found"})
             return done(null,user)
         }catch(err){

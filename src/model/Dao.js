@@ -66,19 +66,4 @@ export default class Dao{
         if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
         return this.models[entity].exists(options)
     }
-
-    //CART
-    addProduct = async(cartId, productId, entity)=>{
-        if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
-        let result = await this.models[entity].updateOne({_id:cartId},{$push:{products:productId}})
-        return {status:"success", payload:result}
-    }
-
-    getProductsByCartId = async (cartId,entity)=>{
-        if(!this.models[entity]) throw new error(`Entity ${entity} not in dao schemas`)
-        let cart = await this.models[entity].findById(cartId) 
-        let products = cart.products
-        return {status:"success", payload:products}
-    }
-
 }

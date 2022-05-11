@@ -1,5 +1,4 @@
 import { cartsService, productsService  } from "../services/services.js";
-import {serialize} from '../utils/utils.js'
 import dotenv from 'dotenv'
 import { createTransport } from 'nodemailer'
 import twilio from "twilio"
