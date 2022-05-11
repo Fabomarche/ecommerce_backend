@@ -8,6 +8,7 @@ import __dirname from './utils.js'
 import sessionRouter from './routes/session.routes.js'
 import productsRouter from './routes/products.routes.js'
 import cartsRouter from './routes/carts.routes.js'
+import userRouter from './routes/users.routes.js'
 import { Server } from 'socket.io'
 import { messageService } from './services/services.js'
 import { createLogger } from './logger.js'
@@ -41,6 +42,8 @@ app.use(express.static(__dirname+'/public'))
 app.use('/api/session',sessionRouter)
 app.use('/api/products',productsRouter)
 app.use('/api/carts',cartsRouter)
+app.use('/api/users',userRouter)
+
 
 app.use(upload.single('image'))
 
@@ -52,9 +55,9 @@ let connectedSockets = {};
 io.on('connection', async socket=>{
     console.log("client connected");
     if(socket.handshake.query.name){
-        //Check if there's an associated id with socketId
+        
         if(Object.values(connectedSockets).some(user=>user.id===socket.handshake.query.id)){
-            //replace socket id for current connected socket
+            
             Object.keys(connectedSockets).forEach(idSocket =>{
                 if(connectedSockets[idSocket].id===socket.handshake.query.id){
                     delete connectedSockets[idSocket];
@@ -76,7 +79,7 @@ io.on('connection', async socket=>{
     io.emit('users',connectedSockets)
     let logs = await messageService.getAllAndPopulate();
     io.emit('logs',logs);
-    //Other listeners
+    
     socket.on('disconnect',reason=>{
         delete connectedSockets[socket.id]
     })
